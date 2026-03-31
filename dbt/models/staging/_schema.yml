@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_yellow_taxi_trips
+    description: "Trajets de taxi nettoyés et enrichis"
+    columns:
+      - name: pickup_datetime
+        description: "Date et heure de prise en charge"
+        tests:
+          - not_null
+      - name: dropoff_datetime
+        description: "Date et heure de dépose"
+        tests:
+          - not_null
+      - name: pu_location_id
+        description: "Zone de départ"
+        tests:
+          - not_null
+      - name: do_location_id
+        description: "Zone d'arrivée"
+        tests:
+          - not_null
+      - name: fare_amount
+        description: "Tarif de la course"
+        tests:
+          - not_null
+      - name: trip_distance
+        description: "Distance en miles"
+        tests:
+          - not_null
