@@ -1,0 +1,5 @@
+# Fichiers de données (trop volumineux pour Git)
+data/parquet/*.parquet
+
+# macOS
+.DS_Store
