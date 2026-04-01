@@ -47,7 +47,7 @@ models:
       - name: pickup_hour
         description: "Heure de prise en charge (0-23)"
       - name: pickup_dow
-        description: "Jour de la semaine (0=lundi, 6=dimanche)"
+        description: "Jour de la semaine ISO (1=lundi, 7=dimanche)"
       - name: avg_speed_mph
         description: "Vitesse moyenne en mph (NULL si durée = 0)"
       - name: tip_percentage

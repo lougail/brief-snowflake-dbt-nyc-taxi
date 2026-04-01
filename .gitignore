@@ -3,6 +3,12 @@ data/parquet/*.parquet
 
 # Secrets
 .env
+evidence/sources/**/connection.options.yaml
+
+# Evidence build
+evidence/.evidence/
+evidence/build/
+evidence/node_modules/
 
 # macOS
 .DS_Store

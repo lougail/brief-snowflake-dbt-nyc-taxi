@@ -38,7 +38,7 @@ enriched AS (
         total_amount,
         trip_duration_min,
         EXTRACT(HOUR FROM pickup_datetime) AS pickup_hour,
-        DAYOFWEEK(pickup_datetime) AS pickup_dow,
+        DAYOFWEEKISO(pickup_datetime) AS pickup_dow,
         DIV0NULL(trip_distance, trip_duration_min / 60) AS avg_speed_mph,
         CASE WHEN fare_amount > 0 THEN (tip_amount / fare_amount) * 100 ELSE 0 END AS tip_percentage
     FROM base

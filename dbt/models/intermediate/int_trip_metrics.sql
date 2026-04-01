@@ -33,7 +33,7 @@ SELECT
     END AS time_period,
 
     CASE
-        WHEN pickup_dow IN (5, 6) THEN 'weekend'
+        WHEN pickup_dow IN (6, 7) THEN 'weekend'
         ELSE 'semaine'
     END AS day_type
 FROM {{ ref('stg_yellow_taxi_trips') }}

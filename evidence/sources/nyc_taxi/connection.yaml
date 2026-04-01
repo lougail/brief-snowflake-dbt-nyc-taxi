@@ -1,0 +1,8 @@
+name: nyc_taxi
+type: snowflake
+options:
+  account: NJ47473.west-europe.azure
+  database: NYC_TAXI_DB
+  warehouse: NYC_TAXI_WH
+  role: ACCOUNTADMIN
+  schema: FINAL
