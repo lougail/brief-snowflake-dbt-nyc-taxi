@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: daily_summary
+    description: >
+      Résumé quotidien des trajets : volume, distance moyenne,
+      revenu total et moyen, durée moyenne. Une ligne par jour.
+    columns:
+      - name: trip_date
+        description: "Date du jour"
+        tests:
+          - not_null
+          - unique
+      - name: total_trips
+        description: "Nombre total de trajets ce jour"
+        tests:
+          - not_null
+      - name: avg_distance
+        description: "Distance moyenne des trajets (miles)"
+      - name: total_revenue
+        description: "Revenu total de la journée ($)"
+      - name: avg_revenue
+        description: "Revenu moyen par trajet ($)"
+      - name: avg_duration_min
+        description: "Durée moyenne des trajets (minutes)"
+
+  - name: zone_analysis
+    description: >
+      Analyse par zone de départ : popularité, revenu moyen et total.
+      Une ligne par zone (PU Location ID).
+    columns:
+      - name: zone_id
+        description: "Identifiant de la zone de départ (PU Location ID)"
+        tests:
+          - not_null
+          - unique
+      - name: total_trips
+        description: "Nombre total de trajets depuis cette zone"
+        tests:
+          - not_null
+      - name: popularity_pct
+        description: "Part de cette zone dans le total des trajets (%)"
+      - name: avg_revenue
+        description: "Revenu moyen par trajet depuis cette zone ($)"
+      - name: total_revenue
+        description: "Revenu total généré depuis cette zone ($)"
+
+  - name: hourly_patterns
+    description: >
+      Patterns horaires : volume de trajets, revenu moyen et
+      vitesse moyenne par heure de la journée. Une ligne par heure (0-23).
+    columns:
+      - name: pickup_hour
+        description: "Heure de la journée (0-23)"
+        tests:
+          - not_null
+          - unique
+      - name: total_trips
+        description: "Nombre total de trajets à cette heure"
+        tests:
+          - not_null
+      - name: avg_revenue
+        description: "Revenu moyen par trajet à cette heure ($)"
+      - name: avg_speed
+        description: "Vitesse moyenne des trajets à cette heure (mph)"

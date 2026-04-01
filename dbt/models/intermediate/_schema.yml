@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: int_trip_metrics
+    description: >
+      Trajets enrichis avec des catégories business : segment de distance,
+      période horaire et type de jour (semaine/weekend).
+      Ce modèle sert de base à tous les marts analytiques.
+    columns:
+      - name: pickup_datetime
+        description: "Date et heure de prise en charge"
+        tests:
+          - not_null
+
+      - name: trip_distance
+        description: "Distance du trajet en miles"
+        tests:
+          - not_null
+
+      - name: distance_category
+        description: "Segment de distance : court (≤1mi), moyen (1-5mi), long (5-10mi), tres_long (>10mi)"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["court", "moyen", "long", "tres_long"]
+
+      - name: time_period
+        description: "Période de la journée : rush_matinal, journee, rush_soir, soiree, nuit"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["rush_matinal", "journee", "rush_soir", "soiree", "nuit"]
+
+      - name: day_type
+        description: "Type de jour : semaine ou weekend"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["semaine", "weekend"]
+
+      - name: avg_speed_mph
+        description: "Vitesse moyenne du trajet en miles par heure"
+
+      - name: tip_percentage
+        description: "Pourcentage de pourboire par rapport au tarif"
+
+      - name: trip_duration_min
+        description: "Durée du trajet en minutes"
+        tests:
+          - not_null

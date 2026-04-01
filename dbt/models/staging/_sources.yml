@@ -6,4 +6,27 @@ sources:
     schema: RAW
     tables:
       - name: yellow_taxi_trips
-        description: "Données brutes des trajets de taxi jaune NYC (2025)"
+        description: "Données brutes des trajets de taxi jaune NYC (2024-2025), chargées depuis les fichiers parquet TLC"
+        columns:
+          - name: vendor_id
+            description: "Identifiant du fournisseur"
+          - name: pickup_datetime
+            description: "Date et heure de prise en charge"
+          - name: dropoff_datetime
+            description: "Date et heure de dépose"
+          - name: passenger_count
+            description: "Nombre de passagers déclaré"
+          - name: trip_distance
+            description: "Distance du trajet en miles (compteur)"
+          - name: pu_location_id
+            description: "Zone de départ TLC"
+          - name: do_location_id
+            description: "Zone d'arrivée TLC"
+          - name: payment_type
+            description: "Mode de paiement"
+          - name: fare_amount
+            description: "Tarif de base ($)"
+          - name: tip_amount
+            description: "Pourboire ($)"
+          - name: total_amount
+            description: "Montant total ($)"

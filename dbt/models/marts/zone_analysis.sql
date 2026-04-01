@@ -7,4 +7,3 @@ SELECT
     SUM(total_amount) AS total_revenue
 FROM {{ ref('int_trip_metrics') }}
 GROUP BY zone_id
-ORDER BY popularity_pct DESC

@@ -8,4 +8,3 @@ SELECT
     AVG(trip_duration_min) AS avg_duration_min
 FROM {{ ref('int_trip_metrics') }}
 GROUP BY trip_date
-ORDER BY trip_date

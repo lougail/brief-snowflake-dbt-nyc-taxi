@@ -1,6 +1,22 @@
 -- Enrichissement avec catégories business
 SELECT
-    *,
+    vendor_id,
+    pickup_datetime,
+    dropoff_datetime,
+    passenger_count,
+    trip_distance,
+    pu_location_id,
+    do_location_id,
+    payment_type,
+    fare_amount,
+    tip_amount,
+    total_amount,
+    trip_duration_min,
+    pickup_hour,
+    pickup_dow,
+    avg_speed_mph,
+    tip_percentage,
+
     CASE
         WHEN trip_distance <= 1 THEN 'court'
         WHEN trip_distance <= 5 THEN 'moyen'
@@ -17,7 +33,7 @@ SELECT
     END AS time_period,
 
     CASE
-        WHEN pickup_dow IN (0, 6) THEN 'weekend'
+        WHEN pickup_dow IN (5, 6) THEN 'weekend'
         ELSE 'semaine'
     END AS day_type
 FROM {{ ref('stg_yellow_taxi_trips') }}

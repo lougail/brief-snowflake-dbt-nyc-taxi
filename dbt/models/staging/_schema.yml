@@ -2,8 +2,10 @@ version: 2
 
 models:
   - name: stg_yellow_taxi_trips
-    description: "Trajets de taxi nettoyés et enrichis"
+    description: "Trajets de taxi nettoyés, filtrés et enrichis depuis les données brutes"
     columns:
+      - name: vendor_id
+        description: "Identifiant du fournisseur (1=Creative Mobile, 2=VeriFone)"
       - name: pickup_datetime
         description: "Date et heure de prise en charge"
         tests:
@@ -12,19 +14,41 @@ models:
         description: "Date et heure de dépose"
         tests:
           - not_null
+      - name: passenger_count
+        description: "Nombre de passagers"
+      - name: trip_distance
+        description: "Distance du trajet en miles"
+        tests:
+          - not_null
       - name: pu_location_id
-        description: "Zone de départ"
+        description: "Zone de départ (TLC Location ID)"
         tests:
           - not_null
       - name: do_location_id
-        description: "Zone d'arrivée"
+        description: "Zone d'arrivée (TLC Location ID)"
         tests:
           - not_null
+      - name: payment_type
+        description: "Mode de paiement (1=carte, 2=cash, 3=gratuit, 4=litige)"
       - name: fare_amount
-        description: "Tarif de la course"
+        description: "Tarif de la course ($)"
         tests:
           - not_null
-      - name: trip_distance
-        description: "Distance en miles"
+      - name: tip_amount
+        description: "Pourboire ($)"
+      - name: total_amount
+        description: "Montant total facturé ($)"
         tests:
           - not_null
+      - name: trip_duration_min
+        description: "Durée du trajet en minutes"
+        tests:
+          - not_null
+      - name: pickup_hour
+        description: "Heure de prise en charge (0-23)"
+      - name: pickup_dow
+        description: "Jour de la semaine (0=lundi, 6=dimanche)"
+      - name: avg_speed_mph
+        description: "Vitesse moyenne en mph (NULL si durée = 0)"
+      - name: tip_percentage
+        description: "Pourcentage de pourboire par rapport au tarif"

@@ -1,6 +1,9 @@
 # Fichiers de données (trop volumineux pour Git)
 data/parquet/*.parquet
 
+# Secrets
+.env
+
 # macOS
 .DS_Store
 dbt/target/

@@ -6,4 +6,3 @@ SELECT
     AVG(avg_speed_mph) AS avg_speed
 FROM {{ ref('int_trip_metrics') }}
 GROUP BY pickup_hour
-ORDER BY pickup_hour
