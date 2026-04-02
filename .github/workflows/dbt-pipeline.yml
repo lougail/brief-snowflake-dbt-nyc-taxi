@@ -1,0 +1,71 @@
+name: dbt Pipeline
+
+on:
+  schedule:
+    # Le 1er de chaque mois à 6h UTC
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
+    # Déclenchement manuel depuis l'interface GitHub
+
+jobs:
+  dbt-build:
+    name: Run dbt build
+    runs-on: ubuntu-latest
+    env:
+      DBT_PROFILES_DIR: .
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt
+        run: pip install dbt-core dbt-snowflake
+
+      - name: Create profiles.yml
+        run: |
+          cat > profiles.yml <<EOF
+          nyc_taxi_dbt:
+            target: prod
+            outputs:
+              prod:
+                type: snowflake
+                account: "${SNOWFLAKE_ACCOUNT}"
+                user: "${SNOWFLAKE_USER}"
+                password: "${SNOWFLAKE_PASSWORD}"
+                role: "${SNOWFLAKE_ROLE}"
+                database: NYC_TAXI_DB
+                warehouse: NYC_TAXI_WH
+                schema: RAW
+                threads: 4
+          EOF
+
+      - name: Verify connection
+        working-directory: dbt
+        run: dbt debug
+
+      - name: Run dbt build (models + tests)
+        working-directory: dbt
+        run: dbt build
+
+      - name: Generate documentation
+        working-directory: dbt
+        run: dbt docs generate
+
+      - name: Upload dbt artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dbt-artifacts
+          path: |
+            dbt/target/manifest.json
+            dbt/target/run_results.json
+            dbt/target/catalog.json

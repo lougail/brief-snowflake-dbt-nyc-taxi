@@ -63,3 +63,79 @@ models:
         description: "Revenu moyen par trajet à cette heure ($)"
       - name: avg_speed
         description: "Vitesse moyenne des trajets à cette heure (mph)"
+
+  - name: fact_trips
+    description: >
+      Table de faits : un enregistrement par trajet avec toutes les
+      métriques calculées et catégories business.
+    columns:
+      - name: pickup_datetime
+        description: "Date et heure de prise en charge"
+        tests:
+          - not_null
+      - name: total_amount
+        description: "Montant total ($)"
+        tests:
+          - not_null
+      - name: distance_category
+        description: "Segment de distance (court, moyen, long, tres_long)"
+      - name: time_period
+        description: "Période horaire (rush_matinal, journee, rush_soir, soiree, nuit)"
+      - name: day_type
+        description: "Type de jour (semaine, weekend)"
+
+  - name: revenue_by_day_of_week
+    description: >
+      Revenu et volume par jour de la semaine.
+      Une ligne par jour (1=lundi, 7=dimanche).
+    columns:
+      - name: pickup_dow
+        description: "Jour de la semaine ISO (1=lundi, 7=dimanche)"
+        tests:
+          - not_null
+      - name: day_type
+        description: "semaine ou weekend"
+      - name: total_trips
+        description: "Nombre de trajets"
+      - name: avg_revenue
+        description: "Revenu moyen par trajet ($)"
+      - name: total_revenue
+        description: "Revenu total ($)"
+      - name: avg_tip_pct
+        description: "Pourcentage moyen de pourboire"
+
+  - name: tips_by_payment_type
+    description: >
+      Analyse des pourboires par mode de paiement.
+      Une ligne par type de paiement.
+    columns:
+      - name: payment_type
+        description: "Code du mode de paiement"
+        tests:
+          - not_null
+          - unique
+      - name: payment_label
+        description: "Libellé (Carte, Cash, Gratuit, Litige, Autre)"
+      - name: avg_tip
+        description: "Pourboire moyen ($)"
+      - name: avg_tip_pct
+        description: "Pourcentage moyen de pourboire"
+      - name: total_tips
+        description: "Total des pourboires ($)"
+
+  - name: speed_by_time_period
+    description: >
+      Vitesse moyenne et distance par période horaire.
+      Une ligne par période.
+    columns:
+      - name: time_period
+        description: "Période horaire"
+        tests:
+          - not_null
+          - unique
+      - name: avg_speed
+        description: "Vitesse moyenne (mph)"
+      - name: avg_distance
+        description: "Distance moyenne (miles)"
+      - name: avg_duration_min
+        description: "Durée moyenne (minutes)"
